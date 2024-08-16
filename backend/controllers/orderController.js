@@ -1,97 +1,53 @@
 import asyncHandler from '../middleware/asyncHandler.js';
 import Order from '../models/orderModel.js';
-import Product from '../models/productModel.js';
 
-// @desc create new order
-// @route post /api/order
-// @acess private
+// @desc    Create new order
+// @route   POST /api/orders
+// @access  Private
 const addOrderItems = asyncHandler(async (req, res) => {
-  const {
-    orderItems,
-    shippingAddress,
-    paymentMethod,
-    itemsPrice,
-    taxPrice,
-    shippingPrice,
-    totalPrice,
-  } = req.body;
-
-  if (orderItems && orderItems.length === 0) {
-    res.status(400);
-    throw new Error('No order item');
-  } else {
-    const order = new Order({
-      orderItems: orderItems.map((x) => ({
-        ...x,
-        Product: x._id,
-        _id: undefined,
-      })),
-      user: req.user_id,
-      shippingAddress,
-      paymentMethod,
-      itemsPrice,
-      taxPrice,
-      shippingPrice,
-      totalPrice,
-    });
-
-    const createOrder = await order.save();
-
-    res.status(201).json(createOrder);
-  }
+  res.send('create order');
 });
 
-// @desc get logged in user order
-// @route get /api/order
-// @acess private
-const getMyOrders = asyncHandler(async (req, res) => {
-  const orders = await Order.find({ user: req.user_id });
-  res.status(200).json(orders);
-});
-
-// @desc get logged in by id
-// @route get /api/order/:id
-// @acess private
+// @desc    Get order by ID
+// @route   GET /api/orders/:id
+// @access  Private
 const getOrderById = asyncHandler(async (req, res) => {
-  const order = await Order.findById(req.params.id).populate(
-    'user',
-    'name email'
-  );
-
-  if (order) {
-    res.status(200).json(order);
-  } else {
-    res.status(400);
-    throw new Error('order not found');
-  }
+  res.send('get order by id');
 });
 
-// @desc getupdate order to paid
-// @route get /api/orders
-// @acess private
+// @desc    Update order to paid
+// @route   GET /api/orders/:id/pay
+// @access  Private
 const updateOrderToPaid = asyncHandler(async (req, res) => {
-  res.send('add order items');
+  res.send('update order to paid');
 });
 
-// @desc getupdate order to deliver
-// @route get /api/orders
-// @acess private/admin
+// @desc    Update order to delivered
+// @route   GET /api/orders/:id/deliver
+// @access  Private/Admin
 const updateOrderToDelivered = asyncHandler(async (req, res) => {
-  res.send('add order deliver');
+  res.send('update order to delivered');
 });
 
-// @desc get orders
-// @route get /api/orders
-// @acess private/admin
+// @desc    Get logged in user orders
+// @route   GET /api/orders/myorders
+// @access  Private
+const getMyOrders = asyncHandler(async (req, res) => {
+  res.send('get logged in user orders');
+});
+
+// @desc    Get all orders
+// @route   GET /api/orders
+// @access  Private/Admin
 const getOrders = asyncHandler(async (req, res) => {
-  res.send('get all Orders');
+  res.send('get all orders');
 });
 
 export {
   addOrderItems,
-  getMyOrders,
   getOrderById,
   updateOrderToPaid,
   updateOrderToDelivered,
+  getMyOrders,
   getOrders,
 };
