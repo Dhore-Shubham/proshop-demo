@@ -25,6 +25,25 @@ const PlaceOrderScreen = () => {
       }
     }, [cart.paymentMethod, cart.shippingAddress.address, navigate]);
 
+    const dispatch = useDispatch();
+    const placeOrderHandler = async () => {
+      try {
+        const res = await createOrder({
+          orderItems: cart.cartItems,
+          shippingAddress: cart.shippingAddress,
+          paymentMethod: cart.paymentMethod,
+          itemsPrice: cart.itemsPrice,
+          shippingPrice: cart.shippingPrice,
+          taxPrice: cart.taxPrice,
+          totalPrice: cart.totalPrice,
+        }).unwrap();
+        dispatch(clearCartItems());
+        navigate(`/order/${res._id}`);
+      } catch (err) {
+        toast.error(err);
+      }
+    };
+
   return (
     <>
     <CheckoutSteps step1 step2 step3 step4 />
