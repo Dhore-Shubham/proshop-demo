@@ -12,6 +12,7 @@
     "axios": "^1.7.3",
     "bootstrap": "^5.3.3",
     "multer": "^1.4.5-lts.1",
+    "proshop-v2": "file:..",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",
     "react-dom": "^18.3.1",

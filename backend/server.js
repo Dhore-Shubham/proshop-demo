@@ -27,13 +27,15 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cookiParser());
 
-app.get('/', (req, res) => {
-  res.send('API is running...');
-});
+// app.get('/', (req, res) => {
+//   res.send('API is running...');
+// });
 
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/upload', uploadRoutes);
+
 app.get('/api/config/paypal', (req, res) =>
   res.send({ clientId: process.env.PAYPAL_CLIENT_ID })
 );
@@ -49,7 +51,7 @@ if (process.env.NODE_ENV === 'production') {
   );
 } else {
   app.get('/', (req, res) => {
-    res.send('API is running....');
+    res.send('API is running.fewvrere...');
   });
 }
 
